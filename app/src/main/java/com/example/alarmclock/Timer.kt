@@ -1,5 +1,6 @@
 package com.example.alarmclock
 
+import android.content.Context
 import android.os.Bundle
 import android.os.SystemClock
 import android.widget.Chronometer
@@ -8,6 +9,9 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
 import android.text.method.Touch.onTouchEvent
+import android.view.GestureDetector
+import android.view.MotionEvent
+import android.view.View
 import android.widget.TimePicker
 
 class Timer : AppCompatActivity() {
@@ -16,19 +20,20 @@ class Timer : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_timer)
+        window.decorView.setOnTouchListener(object : OnSwipeTouchListener(this@Timer) {
+            override fun onSwipeRight() {
+                val dataIntent = Intent(this@Timer, MainActivity::class.java).apply {
+                }
+                startActivity(dataIntent)
+            }
+        })
 
         val timePicker = findViewById<TimePicker>(R.id.picker)
         val timer = findViewById<Chronometer>(R.id.timer)
         val startButton = findViewById<Button>(R.id.startButton)
         val stopButton = findViewById<Button>(R.id.stopButton)
         val resetButton = findViewById<Button>(R.id.resetButton)
-        val transition = findViewById<Button>(R.id.transition)
 
-        transition.setOnClickListener {
-            val dataIntent = Intent(this, MainActivity::class.java).apply {
-            }
-            startActivity(dataIntent)
-        }
 
         timePicker.setIs24HourView(true)
 
@@ -50,4 +55,5 @@ class Timer : AppCompatActivity() {
 
         }
     }
+
 

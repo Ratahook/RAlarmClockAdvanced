@@ -3,32 +3,30 @@ package com.example.alarmclock
 import android.os.Bundle
 import android.os.SystemClock
 import android.widget.Chronometer
-import android.widget.Toast
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
-import android.text.method.Touch.onTouchEvent
+
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_main)
+        window.decorView.setOnTouchListener(object : OnSwipeTouchListener(this@MainActivity) {
+
+            override fun onSwipeLeft() {
+                val dataIntent = Intent(this@MainActivity, Timer::class.java).apply {
+                }
+                startActivity(dataIntent)
+            }
+        })
 
         val chronometer = findViewById<Chronometer>(R.id.chronometer)
         val startButton = findViewById<Button>(R.id.startButton)
         val stopButton = findViewById<Button>(R.id.stopButton)
         val resetButton = findViewById<Button>(R.id.resetButton)
-        val transition = findViewById<Button>(R.id.transition)
 
-
-
-        transition.setOnClickListener {
-            val dataIntent = Intent(this, Timer::class.java).apply {
-            }
-            startActivity(dataIntent)
-        }
         chronometer.setOnChronometerTickListener {
         }
 
@@ -47,5 +45,9 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+    override fun onBackPressed() {
+        super.onBackPressed()
+    }
 }
+
 

@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
                 val dataIntent = Intent(this@MainActivity, Timer::class.java).apply {
                 }
                 startActivity(dataIntent)
+                overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left)
             }
         })
 

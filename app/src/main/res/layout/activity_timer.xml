@@ -6,18 +6,45 @@
     android:layout_height="match_parent"
     tools:context=".Timer">
 
-    <TimePicker
+    <LinearLayout
         android:id="@+id/picker"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/deusex"
-        android:timePickerMode="spinner"
+        android:gravity="center"
         app:layout_constraintBottom_toTopOf="@+id/timer"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.789" />
+        app:layout_constraintVertical_bias="0.775">
+
+        <NumberPicker
+            android:id="@+id/numpicker_hours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:isScrollContainer="false">
+
+        </NumberPicker>
+
+        <NumberPicker
+            android:id="@+id/numpicker_minutes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:isScrollContainer="false">
+
+        </NumberPicker>
+
+        <NumberPicker
+            android:id="@+id/numpicker_seconds"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:isScrollContainer="false">
+
+        </NumberPicker>
+
+    </LinearLayout>
 
     <Chronometer
         android:id="@+id/timer"

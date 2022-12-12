@@ -19,7 +19,13 @@ class Timer : AppCompatActivity() {
                 val dataIntent = Intent(this@Timer, MainActivity::class.java).apply {
                 }
                 startActivity(dataIntent)
-                overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right)
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+            }
+            override fun onSwipeLeft() {
+                val dataIntent1 = Intent(this@Timer, Stopwatch::class.java).apply {
+                }
+                startActivity(dataIntent1)
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
         })
 

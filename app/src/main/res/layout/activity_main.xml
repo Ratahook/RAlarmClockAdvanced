@@ -7,69 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Chronometer
-        android:id="@+id/chronometer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/deusex"
-        android:textSize="42dp"
-        app:layout_constraintBottom_toTopOf="@+id/stopButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.647" />
 
-    <Button
-        android:id="@+id/startButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:backgroundTint="#EF7B00"
-        android:fontFamily="@font/deusex"
-        android:text="Старт"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.881" />
-
-    <Button
-        android:id="@+id/resetButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="44dp"
-        android:backgroundTint="#EF7B00"
-        android:fontFamily="@font/deusex"
-        android:text="Сброс"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.881" />
-
-    <Button
-        android:id="@+id/stopButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#EF7B00"
-        android:fontFamily="@font/deusex"
-        android:text="Пауза"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/resetButton"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toEndOf="@+id/startButton"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.881" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/deusex"
-        android:text="Секундомер"
-        android:textSize="46dp"
-        app:layout_constraintBottom_toTopOf="@+id/chronometer"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

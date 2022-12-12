@@ -13,12 +13,13 @@ class Stopwatch : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_stopwatch)
+
         window.decorView.setOnTouchListener(object : OnSwipeTouchListener(this@Stopwatch) {
-            override fun onSwipeLeft() {
+            override fun onSwipeRight() {
                 val dataIntent1 = Intent(this@Stopwatch, Timer::class.java).apply {
                 }
                 startActivity(dataIntent1)
-                overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right)
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
             }
         })
 

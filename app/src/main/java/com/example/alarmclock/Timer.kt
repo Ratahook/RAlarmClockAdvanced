@@ -12,8 +12,8 @@ class Timer : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_timer)
+
         window.decorView.setOnTouchListener(object : OnSwipeTouchListener(this@Timer) {
             override fun onSwipeRight() {
                 val dataIntent = Intent(this@Timer, MainActivity::class.java).apply {
@@ -21,6 +21,7 @@ class Timer : AppCompatActivity() {
                 startActivity(dataIntent)
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
             }
+
             override fun onSwipeLeft() {
                 val dataIntent1 = Intent(this@Timer, Stopwatch::class.java).apply {
                 }

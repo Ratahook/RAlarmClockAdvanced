@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.*
-import android.os.VibrationEffect.createOneShot
 import android.widget.*
 
 class Timer : AppCompatActivity() {

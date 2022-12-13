@@ -1,14 +1,15 @@
 package com.example.alarmclock
 
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.*
-import android.widget.*
+import android.widget.Button
+import android.widget.Chronometer
+import android.widget.NumberPicker
+import androidx.appcompat.app.AppCompatActivity
 
 class Timer : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_timer)
@@ -29,15 +30,15 @@ class Timer : AppCompatActivity() {
             }
         })
 
-        val hourPicker = findViewById<NumberPicker>(R.id.numpicker_hours)
-        val minutePicker = findViewById<NumberPicker>(R.id.numpicker_minutes)
-        val secondsPicker = findViewById<NumberPicker>(R.id.numpicker_seconds)
-        val timer = findViewById<Chronometer>(R.id.timer)
         val startButton = findViewById<Button>(R.id.startButton)
         val stopButton = findViewById<Button>(R.id.stopButton)
         val resetButton = findViewById<Button>(R.id.resetButton)
+
         val mediaPlayer = MediaPlayer.create(this, R.raw.sound_file_deusex)
 
+        val hourPicker = findViewById<NumberPicker>(R.id.numpicker_hours)
+        val minutePicker = findViewById<NumberPicker>(R.id.numpicker_minutes)
+        val secondsPicker = findViewById<NumberPicker>(R.id.numpicker_seconds)
         hourPicker.maxValue = 99
         hourPicker.minValue = 0
         hourPicker.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
@@ -48,12 +49,15 @@ class Timer : AppCompatActivity() {
         secondsPicker.minValue = 0
         secondsPicker.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
 
+        val timer = findViewById<Chronometer>(R.id.timer)
+        var isTimerRunning = false
         timer.isCountDown = true
         timer.base = SystemClock.elapsedRealtime()
         timer.setOnChronometerTickListener {
             val currentTime = timer.text.toString()
-            if(currentTime == "00:01") {
+            if(currentTime == "00:00" && isTimerRunning) {
                 timer.stop()
+                isTimerRunning = false
                 mediaPlayer.start()
                 vibrate(this)
             }
@@ -62,10 +66,12 @@ class Timer : AppCompatActivity() {
         startButton.setOnClickListener {
             timer.base = SystemClock.elapsedRealtime() + hourPicker.value * 1000 * 3600 + minutePicker.value * 1000 * 60 + secondsPicker.value * 1000
             timer.start()
+            isTimerRunning = true
         }
 
         stopButton.setOnClickListener {
             timer.stop()
+            isTimerRunning = false
             mediaPlayer.stop()
             mediaPlayer.prepare()
         }
@@ -73,6 +79,7 @@ class Timer : AppCompatActivity() {
         resetButton.setOnClickListener {
             timer.base = SystemClock.elapsedRealtime()
             timer.stop()
+            isTimerRunning = false
             mediaPlayer.stop()
             mediaPlayer.prepare()
         }
@@ -90,7 +97,7 @@ private fun vibrate(ctx: Context?) {
         } else {
             val v = ctx.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                v.vibrate(VibrationEffect.createOneShot(1000L, 10))
+                v.vibrate(VibrationEffect.createOneShot(200L, 2))
             } else {
                 v.vibrate(200L)
             }

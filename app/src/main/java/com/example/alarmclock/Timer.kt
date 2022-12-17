@@ -40,9 +40,9 @@ class Timer : AppCompatActivity() {
                 } else {
                     val v = ctx.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                        v.vibrate(VibrationEffect.createOneShot(200L, 2))
+                        v.vibrate(VibrationEffect.createOneShot(2000L, 10))
                     } else {
-                        v.vibrate(200L)
+                        v.vibrate(2000L)
                     }
                 }
             }

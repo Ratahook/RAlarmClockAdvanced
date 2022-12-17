@@ -12,8 +12,8 @@ open class OnSwipeTouchListener(ctx: Context) : View.OnTouchListener {
 
     companion object {
 
-        private val SWIPE_THRESHOLD = 100
-        private val SWIPE_VELOCITY_THRESHOLD = 100
+        private const val SWIPE_THRESHOLD = 100
+        private const val SWIPE_VELOCITY_THRESHOLD = 100
     }
 
     init {

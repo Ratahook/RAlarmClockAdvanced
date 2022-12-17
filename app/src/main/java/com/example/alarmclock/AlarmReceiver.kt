@@ -3,12 +3,15 @@ package com.example.alarmclock
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.media.MediaPlayer
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 
 class AlarmReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
+        mediaPlayer = MediaPlayer.create (context, R.raw.sound_file_deusex)
+
         val builder = NotificationCompat.Builder(context, "wakeup")
             .setSmallIcon(R.drawable.ic_launcher_background)
             .setContentTitle("Ratahook wake up")
@@ -19,5 +22,10 @@ class AlarmReceiver : BroadcastReceiver() {
 
         val notificationManager = NotificationManagerCompat.from(context)
         notificationManager.notify(123,builder.build())
+
+        mediaPlayer.start()
+
+
+
     }
 }

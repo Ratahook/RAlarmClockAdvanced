@@ -23,7 +23,9 @@
         android:id="@+id/setAlarm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/set"
+        android:text="@string/setAlarm"
+        android:backgroundTint="#EF7B00"
+        android:fontFamily="@font/deusex"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -31,5 +33,20 @@
         app:layout_constraintTop_toBottomOf="@+id/picker"
         app:layout_constraintVertical_bias="0.173"
     />
+
+    <Button
+        android:id="@+id/stopAlarm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/stopAlarm"
+        android:backgroundTint="#EF7B00"
+        android:fontFamily="@font/deusex"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setAlarm"
+        app:layout_constraintVertical_bias="0.173"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,11 +5,13 @@ import android.app.PendingIntent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
+import android.media.MediaPlayer
 import android.widget.Button
 import android.widget.TimePicker
 import android.widget.Toast
 import java.util.*
 
+var mediaPlayer: MediaPlayer = MediaPlayer()
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         timePicker.setIs24HourView(true)
 
         val setAlarm = findViewById<Button>(R.id.setAlarm)
+        val stopAlarm = findViewById<Button>(R.id.stopAlarm)
 
         setAlarm.setOnClickListener {
             val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
@@ -46,6 +49,11 @@ class MainActivity : AppCompatActivity() {
             alarmManager.setAlarmClock(alarmClockInfo, pendingIntent)
 
             Toast.makeText(this, "Будильник установлен", Toast.LENGTH_SHORT).show()
+        }
+
+        stopAlarm.setOnClickListener {
+            mediaPlayer.stop()
+            mediaPlayer.prepare()
         }
     }
 

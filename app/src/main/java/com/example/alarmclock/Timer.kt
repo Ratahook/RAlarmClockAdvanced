@@ -30,11 +30,30 @@ class Timer : AppCompatActivity() {
             }
         })
 
+        fun vibrate(ctx: Context?) {
+            if (ctx != null) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    val vibratorManager =
+                        ctx.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+                    val vibrator = vibratorManager.defaultVibrator
+                    vibrator.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK))
+                } else {
+                    val v = ctx.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        v.vibrate(VibrationEffect.createOneShot(200L, 2))
+                    } else {
+                        v.vibrate(200L)
+                    }
+                }
+            }
+        }
+
         val startButton = findViewById<Button>(R.id.startButton)
         val stopButton = findViewById<Button>(R.id.stopButton)
         val resetButton = findViewById<Button>(R.id.resetButton)
 
-        val mediaPlayer = MediaPlayer.create(this, R.raw.sound_file_deusex)
+        val mediaPlayer = MediaPlayer.create (this, R.raw.sound_file_deusex)
+
 
         val hourPicker = findViewById<NumberPicker>(R.id.numpicker_hours)
         val minutePicker = findViewById<NumberPicker>(R.id.numpicker_minutes)
@@ -87,20 +106,4 @@ class Timer : AppCompatActivity() {
         }
     }
 
-private fun vibrate(ctx: Context?) {
-    if (ctx != null) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            val vibratorManager =
-                ctx.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
-            val vibrator = vibratorManager.defaultVibrator
-            vibrator.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK))
-        } else {
-            val v = ctx.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                v.vibrate(VibrationEffect.createOneShot(200L, 2))
-            } else {
-                v.vibrate(200L)
-            }
-        }
-    }
-}
+

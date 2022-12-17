@@ -1,13 +1,10 @@
 package com.example.alarmclock
 
 import android.app.AlarmManager
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
-import android.os.Build
 import android.widget.Button
 import android.widget.TimePicker
 import android.widget.Toast
@@ -32,8 +29,6 @@ class MainActivity : AppCompatActivity() {
 
         val setAlarm = findViewById<Button>(R.id.setAlarm)
 
-        createNotificationChannel()
-
         setAlarm.setOnClickListener {
             val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
             val intent = Intent(this, AlarmReceiver::class.java)
@@ -51,24 +46,6 @@ class MainActivity : AppCompatActivity() {
             alarmManager.setAlarmClock(alarmClockInfo, pendingIntent)
 
             Toast.makeText(this, "Будильник установлен", Toast.LENGTH_SHORT).show()
-
-        }
-
-
-    }
-
-    private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name : CharSequence = "wakeupReminderChannel"
-            val description = "Channel for Alarm Manager"
-            val importance = NotificationManager.IMPORTANCE_HIGH
-            val channel = NotificationChannel("wakeup",name,importance)
-            channel.description = description
-            val notificationManager = getSystemService(
-                NotificationManager::class.java
-            )
-
-            notificationManager.createNotificationChannel(channel)
         }
     }
 

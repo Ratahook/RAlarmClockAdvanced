@@ -2,12 +2,16 @@ package com.example.alarmclock
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.AssetFileDescriptor
+import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.os.*
 import android.widget.Button
 import android.widget.Chronometer
 import android.widget.NumberPicker
 import androidx.appcompat.app.AppCompatActivity
+import java.io.FileNotFoundException
+import java.io.IOException
 
 class Timer : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +56,34 @@ class Timer : AppCompatActivity() {
         val stopButton = findViewById<Button>(R.id.stopButton)
         val resetButton = findViewById<Button>(R.id.resetButton)
 
-        val mediaPlayer = MediaPlayer.create (this, R.raw.sound_file_deusex)
+
+        val mediaPlayer = MediaPlayer().apply {
+            setAudioAttributes(
+                AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .setUsage(AudioAttributes.USAGE_MEDIA)
+                    .build()
+            )
+
+            setWakeMode(applicationContext, PowerManager.PARTIAL_WAKE_LOCK);
+
+            try {
+                val afd: AssetFileDescriptor = resources.openRawResourceFd(R.raw.sound_file_deusex)
+                setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
+                afd.close()
+            } catch (e: FileNotFoundException) {
+                e.printStackTrace()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+            try {
+                prepare()
+            } catch (e: FileNotFoundException) {
+                e.printStackTrace()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
 
 
         val hourPicker = findViewById<NumberPicker>(R.id.numpicker_hours)

@@ -65,10 +65,12 @@ class Timer : AppCompatActivity() {
                     .build()
             )
 
-            setWakeMode(applicationContext, PowerManager.PARTIAL_WAKE_LOCK);
+            setWakeMode(applicationContext, PowerManager.PARTIAL_WAKE_LOCK)
 
             try {
-                val afd: AssetFileDescriptor = resources.openRawResourceFd(R.raw.sound_file_deusex)
+                var nameSoundFile = "sound_file_deusex"
+                val idRawSound = resources.getIdentifier(nameSoundFile, "raw", packageName)
+                val afd: AssetFileDescriptor = resources.openRawResourceFd(idRawSound)
                 setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
                 afd.close()
             } catch (e: FileNotFoundException) {

@@ -1,17 +1,17 @@
 package com.example.alarmclock
 
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.content.res.AssetFileDescriptor
-import android.media.AudioAttributes
-import android.media.MediaPlayer
 import android.os.*
 import android.widget.Button
 import android.widget.Chronometer
 import android.widget.NumberPicker
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import java.io.FileNotFoundException
-import java.io.IOException
+import java.util.*
+
 
 class Timer : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,37 +57,6 @@ class Timer : AppCompatActivity() {
         val resetButton = findViewById<Button>(R.id.resetButton)
 
 
-        val mediaPlayer = MediaPlayer().apply {
-            setAudioAttributes(
-                AudioAttributes.Builder()
-                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                    .setUsage(AudioAttributes.USAGE_MEDIA)
-                    .build()
-            )
-
-            setWakeMode(applicationContext, PowerManager.PARTIAL_WAKE_LOCK)
-
-            try {
-                var nameSoundFile = "sound_file_deusex"
-                val idRawSound = resources.getIdentifier(nameSoundFile, "raw", packageName)
-                val afd: AssetFileDescriptor = resources.openRawResourceFd(idRawSound)
-                setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
-                afd.close()
-            } catch (e: FileNotFoundException) {
-                e.printStackTrace()
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-            try {
-                prepare()
-            } catch (e: FileNotFoundException) {
-                e.printStackTrace()
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-        }
-
-
         val hourPicker = findViewById<NumberPicker>(R.id.numpicker_hours)
         val minutePicker = findViewById<NumberPicker>(R.id.numpicker_minutes)
         val secondsPicker = findViewById<NumberPicker>(R.id.numpicker_seconds)
@@ -101,6 +70,18 @@ class Timer : AppCompatActivity() {
         secondsPicker.minValue = 0
         secondsPicker.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
 
+
+        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+        val intent = Intent(this, AlarmReceiver::class.java)
+
+        val pendingIntent = PendingIntent.getBroadcast(
+            this,
+            0,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE
+        )
+
+
         val timer = findViewById<Chronometer>(R.id.timer)
         var isTimerRunning = false
         timer.isCountDown = true
@@ -110,7 +91,6 @@ class Timer : AppCompatActivity() {
             if(currentTime == "00:00" && isTimerRunning) {
                 timer.stop()
                 isTimerRunning = false
-                mediaPlayer.start()
                 vibrate(this)
             }
         }
@@ -119,24 +99,39 @@ class Timer : AppCompatActivity() {
             timer.base = SystemClock.elapsedRealtime() + hourPicker.value * 1000 * 3600 + minutePicker.value * 1000 * 60 + secondsPicker.value * 1000
             timer.start()
             isTimerRunning = true
+
+            val alarmClockInfo = AlarmManager.AlarmClockInfo(
+                Calendar.getInstance().timeInMillis + hourPicker.value * 60 * 60 * 1000 + minutePicker.value * 60 * 1000 + secondsPicker.value * 1000,
+                pendingIntent)
+            alarmManager.setAlarmClock(alarmClockInfo, pendingIntent)
+
+            Toast.makeText(this, "Таймер установлен", Toast.LENGTH_SHORT).show()
         }
 
         stopButton.setOnClickListener {
             timer.stop()
             isTimerRunning = false
-            mediaPlayer.stop()
-            mediaPlayer.prepare()
+
+            val currentTime = timer.text.toString()
+            if(currentTime == "00:00") {
+                alarmManager.cancel(pendingIntent)
+                mediaPlayer.stop()
+            }
         }
 
         resetButton.setOnClickListener {
             timer.base = SystemClock.elapsedRealtime()
             timer.stop()
             isTimerRunning = false
-            mediaPlayer.stop()
-            mediaPlayer.prepare()
+
+            val currentTime = timer.text.toString()
+            if(currentTime == "00:00") {
+                alarmManager.cancel(pendingIntent)
+                mediaPlayer.stop()
+            }
         }
 
-        }
     }
+}
 
 

@@ -53,7 +53,6 @@ class MainActivity : AppCompatActivity() {
 
         stopAlarm.setOnClickListener {
             mediaPlayer.stop()
-            mediaPlayer.prepare()
         }
     }
 

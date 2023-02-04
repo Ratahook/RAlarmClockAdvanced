@@ -72,7 +72,7 @@ class Timer : AppCompatActivity() {
 
 
         val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-        val intent = Intent(this, AlarmReceiver::class.java)
+        val intent = Intent(this, TimerReceiver::class.java)
 
         val pendingIntent = PendingIntent.getBroadcast(
             this,
@@ -86,6 +86,7 @@ class Timer : AppCompatActivity() {
         var isTimerRunning = false
         timer.isCountDown = true
         timer.base = SystemClock.elapsedRealtime()
+
         timer.setOnChronometerTickListener {
             val currentTime = timer.text.toString()
             if(currentTime == "00:00" && isTimerRunning) {

@@ -4,7 +4,6 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
 import android.content.res.AssetFileDescriptor
 import android.graphics.Color
@@ -17,8 +16,7 @@ import androidx.core.app.NotificationManagerCompat
 import java.io.FileNotFoundException
 import java.io.IOException
 
-
-class AlarmReceiver : BroadcastReceiver() {
+class TimerReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         mediaPlayer = MediaPlayer().apply {
             setAudioAttributes(
@@ -47,32 +45,33 @@ class AlarmReceiver : BroadcastReceiver() {
                 e.printStackTrace()
             } catch (e: IOException) {
                 e.printStackTrace()
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel("wakeup", "ratahook", NotificationManager.IMPORTANCE_DEFAULT).apply {
+            val channel = NotificationChannel("oh no my chicken", "ratahook", NotificationManager.IMPORTANCE_DEFAULT).apply {
                 lightColor = Color.BLUE
                 enableLights(true)
             }
-            val manager = context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             manager.createNotificationChannel(channel)
         }
 
-        val builder = NotificationCompat.Builder(context, "wakeup")
+        val builder = NotificationCompat.Builder(context, "oh no my chicken")
             .setSmallIcon(R.drawable.ic_launcher_background)
-            .setContentTitle("Ratahook wake up")
-            .setContentText("О нет, Ратахуку пора вставать")
-            .setAutoCancel(true)
+            .setContentTitle("Таймер")
+            .setContentText("Таймер")
+            .setAutoCancel(false)
             .setDefaults(NotificationCompat.DEFAULT_ALL)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
 
+
         val notificationManager = NotificationManagerCompat.from(context)
-        notificationManager.notify(2,builder.build())
+        notificationManager.notify(1,builder.build())
 
         mediaPlayer.start()
-
-
 
     }
 }
